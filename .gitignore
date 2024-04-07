@@ -1,5 +1,2 @@
-# Project exclude paths
-/client.js
-/client.js.map
-/index.js
-/index.js.map
+/node_modules
+/.idea
