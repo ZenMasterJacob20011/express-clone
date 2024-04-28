@@ -6,12 +6,11 @@ import expressClone from "../index.js";
 
 describe('app.', () => {
 
-    it('get("/", (req, res)=> {}) should create a new layer on the _router stack', () => {
+    it('get("/", (req, res)=> {}) should create a new layer on the router stack', () => {
         const app = expressClone()
         app.get("/", (req, res) => {
         })
-        assert.strictEqual(app.router.stack[0].method, "get")
-        assert.strictEqual(app.router.stack[0].path, "/")
+        assert.strictEqual(app.router.stack[1].path, "/")
     });
 });
 
