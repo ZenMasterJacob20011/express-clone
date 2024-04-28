@@ -37,3 +37,56 @@ describe('app.METHOD()', () => {
             .end(done)
     });
 });
+
+describe("next('route')", () => {
+    it('should skip all remaining route handlers', (t, done) => {
+        const app = expressClone()
+        app.get('/', (req, res, next) => {
+            res.write('hello1\n')
+            next('route')
+        }, (req, res, next) => {
+            res.end('hello2')
+        })
+
+        app.get('/', (req, res, next) => {
+            res.end('skip')
+        })
+
+        request(app)
+            .get('/')
+            .expect('hello1\nskip', done)
+    });
+});
+
+
+describe("next('router')", () => {
+    it('should skip all remaining routes in the router', (t, done) => {
+        const app = expressClone()
+        const router = expressClone.Router()
+
+        router.get('/', (req, res, next) => {
+            res.write('1\n')
+            next()
+        })
+
+        router.use((req, res, next) => {
+            res.write('2\n')
+            next('router')
+        })
+
+        router.get('/', (req, res, next) => {
+            res.write('I should not run')
+            next()
+        })
+
+        app.use('/myrouter', router)
+
+        app.use((req, res) => {
+            res.end('the end')
+        })
+
+        request(app)
+            .get('/myrouter')
+            .expect('1\n2\nthe end', done)
+    });
+});
