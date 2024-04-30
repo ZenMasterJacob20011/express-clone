@@ -71,7 +71,7 @@ describe('res.', () => {
         it('should set the header given field and value', (t, done) => {
             const app = expressClone()
             app.get('/', (req, res) => {
-                res.set('Content-Length', 1)
+                res.set('Content-Encoding', 'gzip')
                 res.end()
             })
             request(app)
@@ -79,4 +79,26 @@ describe('res.', () => {
                 .expect('Content-Encoding', 'gzip', done)
         });
     })
+    describe('status()', () => {
+        it('should set the status code if passed code number', (t, done) => {
+            const app = expressClone()
+            app.get('/', (req, res) => {
+                res.status(205)
+                res.end()
+            })
+            request(app)
+                .get('/')
+                .expect(205, done)
+        });
+        it('should be able to chain with .send()', (t, done) => {
+            const app = expressClone()
+            app.get('/', (req, res) => {
+                res.status(205).send('hello')
+            })
+            request(app)
+                .get('/')
+                .expect(205)
+                .expect('hello', done)
+        });
+    });
 });
