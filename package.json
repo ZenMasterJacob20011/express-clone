@@ -25,7 +25,6 @@
     "serve-static": "^1.15.0",
     "setprototypeof": "^1.2.0",
     "statuses": "^2.0.1",
-    "typescript": "^5.3.3",
     "utils-merge": "^1.0.1"
   },
   "devDependencies": {
@@ -40,6 +39,7 @@
     "@types/qs": "^6.9.11",
     "@types/utils-merge": "^0.0.31",
     "assert": "^2.1.0",
-    "supertest": "^6.3.4"
+    "supertest": "^6.3.4",
+    "typescript": "^5.4.5"
   }
 }
